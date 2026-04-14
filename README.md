@@ -1,73 +1,104 @@
-# React + TypeScript + Vite
+# Multi-Step Onboarding Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is a multi-step onboarding form built using React. It collects company information across three steps with validation, file uploads, and persistent state.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Multi-step form (Step 1, Step 2, Step 3)
+- State management using Redux Toolkit
+- Data persistence using Redux Persist
+- Schema validation using Zod
+- File upload with preview support
+- File persistence using IndexedDB
+- Dynamic dropdowns (Country → State)
+- Final submission screen displaying collected data
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Architecture & Approach
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### State Management
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Used Redux Toolkit to manage form data across steps
+- Each step updates only its relevant part of the state
+- `currentStep` controls navigation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Persistence
+
+- Used Redux Persist with localStorage to retain form data on refresh
+
+### Validation
+
+- Used Zod schemas for step-wise validation
+- Integrated with react-hook-form using `zodResolver`
+
+### File Handling
+
+- Files are stored in IndexedDB (not Redux)
+- Only metadata (id, name, type) is stored in Redux
+- On reload, file is retrieved using id and preview is recreated
+
+### Dynamic Dropdown
+
+- Country and State are loaded from local JSON files
+- State options are filtered based on selected country
+
+---
+
+## Folder Structure
+
+src/
+│── components/
+│ ├── steps/
+│ ├── ui/
+│── redux/
+│── schemas/
+│── mocks/
+
+---
+
+## Notes
+
+- No backend API was provided, so a final review screen is used to display submitted data
+- After submission, Redux state is cleared to reset the form
+- If the page is refreshed after submission, user is redirected to the start
+
+---
+
+## 🛠 Tech Stack
+
+- React + TypeScript
+- Redux Toolkit
+- React Hook Form
+- Zod
+- IndexedDB (via idb)
+- Tailwind CSS
+
+---
+
+## ▶️ How to Run
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 💬 Challenges Faced
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Handling file persistence using IndexedDB
+- Managing Redux state updates without overwriting data
+- Ensuring consistent data flow across steps
+
+---
+
+## 📌 Future Improvements
+
+- Add backend API integration
+- Improve UI with animations
+- Add review step before submission
