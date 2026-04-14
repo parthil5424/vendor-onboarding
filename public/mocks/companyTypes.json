@@ -1,0 +1,7 @@
+[
+  { "label": "Private Limited", "value": "private_ltd" },
+  { "label": "Public Limited", "value": "public_ltd" },
+  { "label": "Partnership", "value": "partnership" },
+  { "label": "Sole Proprietorship", "value": "sole_prop" },
+  { "label": "LLP", "value": "llp" }
+]

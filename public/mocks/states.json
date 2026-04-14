@@ -1,0 +1,10 @@
+[
+  { "code": "GJ", "name": "Gujarat", "countryCode": "IN" },
+  { "code": "MH", "name": "Maharashtra", "countryCode": "IN" },
+  { "code": "DL", "name": "Delhi", "countryCode": "IN" },
+
+  { "code": "CA", "name": "California", "countryCode": "US" },
+  { "code": "TX", "name": "Texas", "countryCode": "US" },
+
+  { "code": "LN", "name": "London", "countryCode": "UK" }
+]
